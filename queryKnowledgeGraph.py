@@ -15,6 +15,6 @@ params = {
 url = service_url + '?' + urllib.parse.urlencode(params)
 reader = codecs.getreader("utf-8")
 response = json.load(reader(urllib.request.urlopen(url)))
-print(response)
+#print(response)
 for element in response['itemListElement']:
-	print(element['result']['name'] + ' (' + str(element['resultScore']) + ')')
+	print(element['result']['name'] + ' (' + str(element['resultScore']) + ')' + ' ' + str(element['result']['@type'])) 
