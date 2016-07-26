@@ -1,0 +1,38 @@
+﻿@{
+    ViewBag.Title = "Text Analytics - Hackathon 2016";
+}
+<script src="/Scripts/jquery-1.10.2.js"></script>
+<script src="/Scripts/jquery.unobtrusive-ajax.js"></script>
+<script src="/Scripts/Index.js"></script>
+
+
+<p class="lead">Enter text below and we will analyze it and give you insights from it. Feel free to enter several sentences</p>
+
+<div class="container-small">
+    @using (Ajax.BeginForm("Analyze", "Home", new AjaxOptions
+    {
+        HttpMethod = "Get",
+        InsertionMode = InsertionMode.Replace,
+        UpdateTargetId = "AnalysisResults",
+        LoadingElementId = "WaitingForResults",
+        OnSuccess = "UpdateOnSuccess",
+        OnBegin = "UpdateOnBegin",
+        OnFailure = "UpdateOnError"
+    }))
+    {
+        <p>
+            <textarea id="inputHelpBlock" name="inputText" required="required"
+                      rows="15" cols="150" placeholder="Your text to analyze..."></textarea>
+        </p>
+        <p class="clearfix">
+            <input type="submit" class="btn btn-primary float-right" value="Analyze!" id="Analyze" />
+        </p>
+
+        <div id="WaitingForResults" class="hidden">
+            Analyzing <div id="ProgressBar">. </div>
+        </div>
+
+        <div id="AnalysisResults" class="hidden">
+        </div>
+    }
+</div>
