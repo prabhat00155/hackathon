@@ -21,10 +21,14 @@ url = service_url + '?' + urllib.parse.urlencode(params)
 reader = codecs.getreader("utf-8")
 response = json.load(reader(urllib.request.urlopen(url)))
 
+valueString = 'value'
 bestEntity = response['answers'][0]
-types = bestEntity['value'][0]['properties'][3]['values']
+for prop in bestEntity['value'][0]['properties']:
+	if prop['propertyName'] == 'Type':
+		types = prop['values']
+		break
 
-allTypes = [ parseType(element['value']) for element in types if not element['value'] == 'PrecisionGraphEntity'
-															  and not element['value'].startswith('http')]
+allTypes = [ parseType(element[valueString]) for element in types if not element[valueString] == 'PrecisionGraphEntity'
+															  and not element[valueString].startswith('http')]
 print(allTypes)
 
