@@ -4,13 +4,11 @@ import urllib.request
 import codecs
 import re
 
-def parseType(value):
+def parse_type(value):
 	if(value.startswith("mso:")):
 		value = re.split(':|\.',value)[-1]
 	return " ".join(value.split('_'))
 
-
-api_key = open('.api_key').read()
 query = input('Enter your query:')
 service_url = 'https://www.bing.com/api/v5/entities/custom/SatoriTextAnalytics/Search'
 params = {
@@ -28,7 +26,7 @@ for prop in bestEntity['value'][0]['properties']:
 		types = prop['values']
 		break
 
-allTypes = [ parseType(element[valueString]) for element in types if not element[valueString] == 'PrecisionGraphEntity'
+allTypes = [ parse_type(element[valueString]) for element in types if not element[valueString] == 'PrecisionGraphEntity'
 															  and not element[valueString].startswith('http')]
 print(allTypes)
 
