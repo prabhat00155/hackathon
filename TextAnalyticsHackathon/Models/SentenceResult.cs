@@ -3,12 +3,14 @@
     using System.Collections.Generic;
     using System.Linq;
     using Microsoft.NaturalLanguage.ExtractionPreprocessing;
+    using Newtonsoft.Json;
 
     public class SentenceResult
     {
         // text for this sentence
         public string Text { get; set; }
 
+        [JsonIgnore]
         // tokens in this sentence
         public IList<IPreprocessedToken> Tokens { get; set; }
         public double SentimentScore { get; set; }
