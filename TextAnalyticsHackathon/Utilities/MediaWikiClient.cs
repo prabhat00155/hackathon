@@ -64,6 +64,10 @@ namespace TextAnalyticsHackathon.Utilities
             var page = jsonResponse != null ? jsonResponse.SelectToken("query").SelectToken("pages").First.First : null;
             var categoriesToken = page != null ? page.SelectToken("categories") : null;
             List<string> categoriesList = new List<string>();
+            if (categoriesToken == null)
+            {
+                return categoriesList;
+            }
             foreach (var categoryToken in categoriesToken.Children())
             {
                 var category = categoryToken != null ? categoryToken.SelectToken("title").ToString() : null;
