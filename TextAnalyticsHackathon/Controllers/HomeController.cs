@@ -15,11 +15,13 @@ namespace TextAnalyticsHackathon.Controllers
         private readonly SentenceSplitter sentenceSplitter;
         private readonly SentimentClient sentimentClient;
         private readonly CognitiveEntityLinkingClient entityClient;
+        private readonly MediaWikiClient mediaWikiClient;
 
         public HomeController()
         {
             sentenceSplitter = new SentenceSplitter();
             sentimentClient = new SentimentClient();
+            mediaWikiClient = new MediaWikiClient();
             entityClient = new CognitiveEntityLinkingClient();
         }
 
@@ -28,6 +30,7 @@ namespace TextAnalyticsHackathon.Controllers
             var sentences = sentenceSplitter.Split(inputText);
             await sentimentClient.GetSentiment(sentences);
             await entityClient.GetEntities(sentences);
+            await mediaWikiClient.GetCategories(sentences);
             return Content(JsonConvert.SerializeObject(sentences), "text/html");
         }
 

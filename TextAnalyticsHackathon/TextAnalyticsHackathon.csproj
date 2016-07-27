@@ -21,6 +21,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>x64</PlatformTarget>
@@ -145,6 +146,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\BatchResultV2.cs" />
+    <Compile Include="Models\CategoryInput.cs" />
     <Compile Include="Models\CognitiveEntityLinkResponse.cs" />
     <Compile Include="Models\ErrorRecordV2.cs" />
     <Compile Include="Models\SentenceResult.cs" />
@@ -153,6 +155,7 @@
     <Compile Include="Models\SentimentInput.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\CognitiveEntityLinkingClient.cs" />
+    <Compile Include="Utilities\MediaWikiClient.cs" />
     <Compile Include="Utilities\SentenceSplitter.cs" />
     <Compile Include="Utilities\SentimentClient.cs" />
   </ItemGroup>
