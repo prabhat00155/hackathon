@@ -15,6 +15,7 @@
         public IList<IPreprocessedToken> Tokens { get; set; }
         public double SentimentScore { get; set; }
         public IEnumerable<string> MediaWikiCategories { get; set; }
+        public IEnumerable<string> SatoriCategories { get; set; }
         public EntityLinkResponse Entities { get; set; }
         public List<string> KnowledgeGraphCategories { get; set; }
 
