@@ -7,6 +7,7 @@ namespace TextAnalyticsHackathon.Controllers
     using System.Net.Http;
     using System.Threading.Tasks;
     using System.Web.Mvc;
+    using Models;
     using Newtonsoft.Json;
     using Utilities;
 
@@ -37,7 +38,8 @@ namespace TextAnalyticsHackathon.Controllers
             await mediaWikiClient.GetCategories(sentences);
             await queryKnowlegeGraph.GetEntities(sentences);
             await satoriClient.GetCategories(sentences);
-            return Content(JsonConvert.SerializeObject(sentences), "text/html");
+            var analysisResult = new AnalysisResult(sentences);
+            return Content(analysisResult.ToHtml(), "text/html");
         }
 
         public ActionResult Index()

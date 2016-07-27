@@ -173,6 +173,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AnalysisResult.cs" />
     <Compile Include="Models\BatchResultV2.cs" />
     <Compile Include="Models\CategoryInput.cs" />
     <Compile Include="Models\CognitiveEntityLinkResponse.cs" />
@@ -237,6 +238,7 @@
     <Content Include="Utilities\KeyPhrasePreprocessor.en-us.mrr">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Views\Home\Analyze.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
