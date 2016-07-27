@@ -71,3 +71,16 @@ C:\Users\paruizfi\Desktop\CSharpHackathon\hackathon\TextAnalyticsHackathon\bin\A
 C:\Users\paruizfi\Desktop\CSharpHackathon\hackathon\TextAnalyticsHackathon\obj\x64\Release\TextAnalyticsHackathon.csprojResolveAssemblyReference.cache
 C:\Users\paruizfi\Desktop\CSharpHackathon\hackathon\TextAnalyticsHackathon\obj\x64\Release\TextAnalyticsHackathon.dll
 C:\Users\paruizfi\Desktop\CSharpHackathon\hackathon\TextAnalyticsHackathon\obj\x64\Release\TextAnalyticsHackathon.pdb
+C:\Users\paruizfi\Desktop\CSharpHackathon\hackathon\TextAnalyticsHackathon\bin\ApplicationInsights.config
+C:\Users\paruizfi\Desktop\CSharpHackathon\hackathon\TextAnalyticsHackathon\bin\Microsoft.AI.Agent.Intercept.dll
+C:\Users\paruizfi\Desktop\CSharpHackathon\hackathon\TextAnalyticsHackathon\bin\Microsoft.AI.DependencyCollector.dll
+C:\Users\paruizfi\Desktop\CSharpHackathon\hackathon\TextAnalyticsHackathon\bin\Microsoft.AI.PerfCounterCollector.dll
+C:\Users\paruizfi\Desktop\CSharpHackathon\hackathon\TextAnalyticsHackathon\bin\Microsoft.AI.ServerTelemetryChannel.dll
+C:\Users\paruizfi\Desktop\CSharpHackathon\hackathon\TextAnalyticsHackathon\bin\Microsoft.AI.Web.dll
+C:\Users\paruizfi\Desktop\CSharpHackathon\hackathon\TextAnalyticsHackathon\bin\Microsoft.AI.WindowsServer.dll
+C:\Users\paruizfi\Desktop\CSharpHackathon\hackathon\TextAnalyticsHackathon\bin\Microsoft.ApplicationInsights.dll
+C:\Users\paruizfi\Desktop\CSharpHackathon\hackathon\TextAnalyticsHackathon\bin\Microsoft.AI.DependencyCollector.xml
+C:\Users\paruizfi\Desktop\CSharpHackathon\hackathon\TextAnalyticsHackathon\bin\Microsoft.AI.ServerTelemetryChannel.xml
+C:\Users\paruizfi\Desktop\CSharpHackathon\hackathon\TextAnalyticsHackathon\bin\Microsoft.AI.Web.xml
+C:\Users\paruizfi\Desktop\CSharpHackathon\hackathon\TextAnalyticsHackathon\bin\Microsoft.AI.WindowsServer.xml
+C:\Users\paruizfi\Desktop\CSharpHackathon\hackathon\TextAnalyticsHackathon\bin\Microsoft.ApplicationInsights.xml

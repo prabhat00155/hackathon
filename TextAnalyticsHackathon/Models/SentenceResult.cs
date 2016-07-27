@@ -12,7 +12,7 @@
         // tokens in this sentence
         public IList<IPreprocessedToken> Tokens { get; set; }
         public double SentimentScore { get; set; }
-        public IEnumerable<string> Categories { get; set; }
+        public IEnumerable<string> MediaWikiCategories { get; set; }
         public EntityLinkResponse Entities { get; set; }
 
         public IEnumerable<string> GetNouns()

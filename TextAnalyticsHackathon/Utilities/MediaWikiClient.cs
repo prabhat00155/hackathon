@@ -1,10 +1,7 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
+﻿using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Linq;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Web;
 using TextAnalyticsHackathon.Models;
@@ -17,26 +14,60 @@ namespace TextAnalyticsHackathon.Utilities
 
         public async Task GetCategories(List<SentenceResult> sentences)
         {
+            await Task.WhenAll( sentences.Select(async sentence =>
+           {
+               var nounsCategories = await Task.WhenAll(sentence.GetNouns().Select(async noun => await GetCategoriesForNoun(noun)));
+               sentence.MediaWikiCategories = nounsCategories.SelectMany(nounCategories => nounCategories).ToList();
+           }));
+        }
+
+        private async Task<IEnumerable<string>> GetCategoriesForNoun(string noun)
+        {
             using (var httpClient = new HttpClient())
             {
-                foreach (var sentence in sentences)
+                var queryCountLimit = 5;
+                string clContinueToken = null, continueToken = null;
+                IEnumerable<string> categoriesList = new List<string>();
+                string response = null;
+                bool isFirstQuery = true;
+                do
                 {
-                    var response = await (await httpClient.GetAsync(baseUri + HttpUtility.UrlEncode(sentence.Text))).Content.ReadAsStringAsync();
+                    response = await (await httpClient.GetAsync(baseUri + HttpUtility.UrlEncode(noun) + GetContinueParams(isFirstQuery, clContinueToken, continueToken)))
+                                    .Content.ReadAsStringAsync();
+                   
+                    clContinueToken = continueToken = null;
                     var jsonResponse = JObject.Parse(response);
-                    var page = jsonResponse.SelectToken("query")?.SelectToken("pages")?.First?.First;
-                    var categoriesToken = page?.SelectToken("categories");
-                    List<string> categoriesList = new List<string>();
-                    foreach (var categoryToken in categoriesToken?.Children())
-                    {
-                        var category = categoryToken?.SelectToken("title")?.ToString();
-                        if (IsValidCategory(category))
-                        {
-                            categoriesList.Add(ParseCategory(category));
-                        }                       
-                    }
-                    sentence.Categories = categoriesList;
+                    categoriesList = categoriesList.Concat(GetCategoriesInResponse(jsonResponse));
+                    isFirstQuery = false;
+                    var continueSectionToken = jsonResponse?.SelectToken("continue");
+                    continueToken = continueSectionToken?.SelectToken("continue")?.ToString();
+                    clContinueToken = continueSectionToken?.SelectToken("clcontinue")?.ToString();
+
+                } while (!string.IsNullOrEmpty(clContinueToken) && !string.IsNullOrEmpty(continueToken) && --queryCountLimit > 0);
+                return categoriesList;
+            }
+        }
+
+        private string GetContinueParams(bool isFirstQuery, string clContinueToken, string continueToken)
+        {
+            if (isFirstQuery || string.IsNullOrEmpty(clContinueToken) || string.IsNullOrEmpty(continueToken)) return "";
+            return string.Format("&continue={0}&clcontinue={1}",continueToken,clContinueToken);
+        }
+
+        private IEnumerable<string> GetCategoriesInResponse(JToken jsonResponse)
+        {           
+            var page = jsonResponse?.SelectToken("query")?.SelectToken("pages")?.First?.First;
+            var categoriesToken = page?.SelectToken("categories");
+            List<string> categoriesList = new List<string>();
+            foreach (var categoryToken in categoriesToken?.Children())
+            {
+                var category = categoryToken?.SelectToken("title")?.ToString();
+                if (IsValidCategory(category))
+                {
+                    categoriesList.Add(ParseCategory(category));
                 }
             }
+            return categoriesList;
         }
 
         private string ParseCategory(string category)
