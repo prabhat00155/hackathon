@@ -32,7 +32,8 @@ namespace TextAnalyticsHackathon.Utilities
                         sentence.KnowledgeGraphCategories = new List<string>();
                         
                         foreach (JToken j in entities.Children())
-                            sentence.KnowledgeGraphCategories.Add((string)j);
+                            if(!("Thing".Equals((string)j)))
+                                sentence.KnowledgeGraphCategories.Add((string)j);
                             
                      }
                     catch(Exception ex)
