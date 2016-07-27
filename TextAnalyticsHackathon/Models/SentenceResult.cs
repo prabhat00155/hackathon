@@ -14,6 +14,7 @@
         public double SentimentScore { get; set; }
         public IEnumerable<string> MediaWikiCategories { get; set; }
         public EntityLinkResponse Entities { get; set; }
+        public List<string> KnowledgeGraphCategories { get; set; }
 
         public IEnumerable<string> GetNouns()
         {

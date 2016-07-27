@@ -16,6 +16,7 @@ namespace TextAnalyticsHackathon.Controllers
         private readonly SentimentClient sentimentClient;
         private readonly CognitiveEntityLinkingClient entityClient;
         private readonly MediaWikiClient mediaWikiClient;
+        private readonly QueryKnowledgeGraph queryKnowlegeGraph;
 
         public HomeController()
         {
@@ -23,6 +24,7 @@ namespace TextAnalyticsHackathon.Controllers
             sentimentClient = new SentimentClient();
             mediaWikiClient = new MediaWikiClient();
             entityClient = new CognitiveEntityLinkingClient();
+            queryKnowlegeGraph = new QueryKnowledgeGraph();
         }
 
         public async Task<ActionResult> Analyze(string inputText)
@@ -31,6 +33,7 @@ namespace TextAnalyticsHackathon.Controllers
             await sentimentClient.GetSentiment(sentences);
             await entityClient.GetEntities(sentences);
             await mediaWikiClient.GetCategories(sentences);
+            await queryKnowlegeGraph.GetEntities(sentences);
             return Content(JsonConvert.SerializeObject(sentences), "text/html");
         }
 
