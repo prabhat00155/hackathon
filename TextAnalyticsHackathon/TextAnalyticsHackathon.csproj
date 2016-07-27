@@ -185,6 +185,7 @@
     <Compile Include="Utilities\CognitiveEntityLinkingClient.cs" />
     <Compile Include="Utilities\MediaWikiClient.cs" />
     <Compile Include="Utilities\QueryKnowledgeGraph.cs" />
+    <Compile Include="Utilities\SatoriClient.cs" />
     <Compile Include="Utilities\SentenceSplitter.cs" />
     <Compile Include="Utilities\SentimentClient.cs" />
   </ItemGroup>
