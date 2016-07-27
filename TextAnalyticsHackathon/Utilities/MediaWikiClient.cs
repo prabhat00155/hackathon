@@ -39,10 +39,15 @@ namespace TextAnalyticsHackathon.Utilities
                     var jsonResponse = JObject.Parse(response);
                     categoriesList = categoriesList.Concat(GetCategoriesInResponse(jsonResponse));
                     isFirstQuery = false;
-                    var continueSectionToken = jsonResponse?.SelectToken("continue");
-                    continueToken = continueSectionToken?.SelectToken("continue")?.ToString();
-                    clContinueToken = continueSectionToken?.SelectToken("clcontinue")?.ToString();
-
+                    if (jsonResponse != null)
+                    {
+                        var continueSectionToken = jsonResponse.SelectToken("continue");
+                        if (continueSectionToken != null)
+                        {
+                            continueToken = continueSectionToken.SelectToken("continue") != null ? continueSectionToken.SelectToken("continue").ToString() : null;
+                            clContinueToken = continueSectionToken.SelectToken("clcontinue") != null ? continueSectionToken.SelectToken("clcontinue").ToString() : null;
+                        }
+                    }
                 } while (!string.IsNullOrEmpty(clContinueToken) && !string.IsNullOrEmpty(continueToken) && --queryCountLimit > 0);
                 return categoriesList;
             }
@@ -56,12 +61,12 @@ namespace TextAnalyticsHackathon.Utilities
 
         private IEnumerable<string> GetCategoriesInResponse(JToken jsonResponse)
         {           
-            var page = jsonResponse?.SelectToken("query")?.SelectToken("pages")?.First?.First;
-            var categoriesToken = page?.SelectToken("categories");
+            var page = jsonResponse != null ? jsonResponse.SelectToken("query").SelectToken("pages").First.First : null;
+            var categoriesToken = page != null ? page.SelectToken("categories") : null;
             List<string> categoriesList = new List<string>();
-            foreach (var categoryToken in categoriesToken?.Children())
+            foreach (var categoryToken in categoriesToken.Children())
             {
-                var category = categoryToken?.SelectToken("title")?.ToString();
+                var category = categoryToken != null ? categoryToken.SelectToken("title").ToString() : null;
                 if (IsValidCategory(category))
                 {
                     categoriesList.Add(ParseCategory(category));
@@ -73,7 +78,7 @@ namespace TextAnalyticsHackathon.Utilities
         private string ParseCategory(string category)
         {
             var prefix = "Category:";
-            if (category?.StartsWith(prefix) ?? false)
+            if (category != null ? category.StartsWith(prefix) : false)
                 return category.Substring(prefix.Length);
             return category;
         }
