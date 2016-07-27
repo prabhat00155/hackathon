@@ -20,25 +20,26 @@ namespace TextAnalyticsHackathon.Utilities
         {
             foreach(SentenceResult sentence in sentences)
             {
-                string query = sentence.Text;
-                using (var httpClient = new HttpClient())
+                IEnumerable<string> queries = sentence.GetNouns();
+                sentence.KnowledgeGraphCategories = new List<string>();
+                foreach (string query in queries)
                 {
-                    try
+                    using (var httpClient = new HttpClient())
                     {
-                        var response = await (await httpClient.GetAsync(baseUri + HttpUtility.UrlEncode(query))).Content.ReadAsStringAsync();
-                        var jsonResponse = JObject.Parse(response);
-                        var entities = jsonResponse.SelectToken("itemListElement[0].result").SelectToken("@type");
+                        try
+                        {
+                            var response = await (await httpClient.GetAsync(baseUri + HttpUtility.UrlEncode(query))).Content.ReadAsStringAsync();
+                            var jsonResponse = JObject.Parse(response);
+                            var entities = jsonResponse.SelectToken("itemListElement[0].result").SelectToken("@type");
 
-                        sentence.KnowledgeGraphCategories = new List<string>();
-                        
-                        foreach (JToken j in entities.Children())
-                            if(!("Thing".Equals((string)j)))
-                                sentence.KnowledgeGraphCategories.Add((string)j);
-                            
-                     }
-                    catch(Exception ex)
-                    {
-                        System.Diagnostics.Debug.WriteLine(ex.StackTrace);
+                            foreach (JToken j in entities.Children())
+                                if (!("Thing".Equals((string)j)) && !sentence.KnowledgeGraphCategories.Contains((string)j) )
+                                    sentence.KnowledgeGraphCategories.Add((string)j);
+                        }
+                        catch (Exception ex)
+                        {
+                            System.Diagnostics.Debug.WriteLine(ex.StackTrace);
+                        }
                     }
                 }
             }
