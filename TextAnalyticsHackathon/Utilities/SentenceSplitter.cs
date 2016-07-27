@@ -5,6 +5,7 @@
     using System.IO;
     using System.Linq;
     using System.Reflection;
+    using System.Runtime.Remoting.Messaging;
     using Microsoft.NaturalLanguage.KeyPhraseExtraction;
     using Models;
 
@@ -33,9 +34,10 @@
         public List<SentenceResult> Split(string input)
         {
             int tokenCount;
-            return
-                extractor.m_preprocessor.Preprocess(input, out tokenCount)
-                    .Select(s => new SentenceResult() {Text = s.Text}).ToList();
+            var preprocessedSentences =
+                extractor.m_preprocessor.Preprocess(input, out tokenCount);
+            var sentenceResults = preprocessedSentences.Select(s => new SentenceResult() {Text = s.Text, Tokens = s.Tokens}).ToList();
+            return sentenceResults;
         }
     }
 }
