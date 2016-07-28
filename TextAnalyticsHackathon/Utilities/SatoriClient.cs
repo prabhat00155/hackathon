@@ -73,7 +73,7 @@ namespace TextAnalyticsHackathon.Utilities
 
         private bool IsValidCategory(string category)
         {
-            return category != null && !(category.StartsWith("PrecisionGraphEntity") || category.StartsWith("http"));
+            return category != null && !(category.Split(' ').Count() > 2 || category.StartsWith("PrecisionGraphEntity") || category.StartsWith("http") || category.StartsWith("dev:"));
         }
     }
 }
