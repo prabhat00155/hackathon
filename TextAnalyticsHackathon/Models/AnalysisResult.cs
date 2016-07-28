@@ -35,7 +35,7 @@
                         WikipediaCategories[wikiCategory] = new Tuple<double, int>(0, 0);
                     }
                     WikipediaCategories[wikiCategory] = new Tuple<double, int>(
-                        WikipediaCategories[wikiCategory].Item1 + sentence.SentimentScore, WikipediaCategories[wikiCategory].Item2 + 1);
+                        WikipediaCategories[wikiCategory].Item1 + Math.Round(sentence.SentimentScore, 3), WikipediaCategories[wikiCategory].Item2 + 1);
                 }
                 CognitiveEntities = Sentences.Where(s => (s.Entities.EntityLinks != null)).SelectMany(s => (s.Entities.EntityLinks .Select(e => e.Name))).ToList();
 
@@ -48,7 +48,7 @@
                             GoogleEntities[googleCat] = new Tuple<double, int>(0, 0);
                         }
                         GoogleEntities[googleCat] = new Tuple<double, int>(
-                            GoogleEntities[googleCat].Item1 + sentence.SentimentScore,
+                            GoogleEntities[googleCat].Item1 + Math.Round(sentence.SentimentScore, 3),
                             GoogleEntities[googleCat].Item2 + 1);
                     }
                 }
@@ -62,7 +62,7 @@
                             SatoriEntities[satoriCat] = new Tuple<double, int>(0, 0);
                         }
                         SatoriEntities[satoriCat] = new Tuple<double, int>(
-                            SatoriEntities[satoriCat].Item1 + sentence.SentimentScore,
+                            SatoriEntities[satoriCat].Item1 + Math.Round(sentence.SentimentScore, 3),
                             SatoriEntities[satoriCat].Item2 + 1);
                     }
                 }
