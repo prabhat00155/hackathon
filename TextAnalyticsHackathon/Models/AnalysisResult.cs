@@ -76,7 +76,8 @@
             str.Append("<table class=\"table\"><thead><tr><th>Category</th><th>Avg sentiment</th></thead><tbody>");
             foreach (var kvp in WikipediaCategories)
             {
-                str.Append("<tr><td>" + kvp.Key + "</td><td>" + (kvp.Value.Item1 / kvp.Value.Item2) + "</td></tr>");
+                double sentiment = (kvp.Value.Item1/kvp.Value.Item2);
+                str.Append("<tr><td>" + kvp.Key + "</td><td " + GetSentimentColor(sentiment) + ">" + sentiment + "</td></tr>");
             }
             str.Append("</tbody></table>");
 
@@ -95,7 +96,8 @@
                 str.Append("<table class=\"table\"><thead><tr><th>Google category</th><th>Avg sentiment</th></thead><tbody>");
                 foreach (var kvp in GoogleEntities)
                 {
-                    str.Append("<tr><td>" + kvp.Key + "</td><td>" + (kvp.Value.Item1 / kvp.Value.Item2) + "</td></tr>");
+                    double sentiment = (kvp.Value.Item1/kvp.Value.Item2);
+                    str.Append("<tr><td>" + kvp.Key + "</td><td " + GetSentimentColor(sentiment) + ">" + sentiment + "</td></tr>");
                 }
                 str.Append("</tbody></table>");
                 
@@ -106,12 +108,26 @@
                 str.Append("<table class=\"table\"><thead><tr><th>Satori category</th><th>Avg sentiment</th></thead><tbody>");
                 foreach (var kvp in SatoriEntities)
                 {
-                    str.Append("<tr><td>" + kvp.Key + "</td><td>" + (kvp.Value.Item1 / kvp.Value.Item2) + "</td></tr>");
+                    double sentiment = (kvp.Value.Item1/kvp.Value.Item2);
+                    str.Append("<tr><td>" + kvp.Key + "</td><td " + GetSentimentColor(sentiment) + ">" + sentiment + "</td></tr>");
                 }
                 str.Append("</tbody></table>");
                 
             }
             return str.ToString();
+        }
+
+        private string GetSentimentColor(double score)
+        {
+            if (score < 0.3)
+            {
+                return "bgcolor=\"tomato\"";
+            }
+            if (score > 0.75)
+            {
+                return "bgcolor=\"palegreen\"";
+            }
+            return "bgcolor=\"LightCyan\"";
         }
     }
 }
