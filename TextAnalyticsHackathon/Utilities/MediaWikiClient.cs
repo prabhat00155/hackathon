@@ -89,7 +89,7 @@ namespace TextAnalyticsHackathon.Utilities
 
         private bool IsValidCategory(string category)
         {
-            return category != null && !(category.StartsWith("Category:All") || category.StartsWith("Category:Article") || category.StartsWith("Category:Commons")
+            return category != null && !(category.Split(' ').Count() > 2 || category.StartsWith("Category:Unprintworthy redirects") || category.StartsWith("Category:All") || category.StartsWith("Category:Article") || category.StartsWith("Category:Commons")
                     || category.StartsWith("Category:Pages") || category.StartsWith("Category:Wikipedia") || category.StartsWith("Category:CS1") || category.StartsWith("Category:Types of")
                     || category.StartsWith("Category:Disambiguation") || category.StartsWith("Category:SI") || category.StartsWith("Category:Redirects"));
         }
